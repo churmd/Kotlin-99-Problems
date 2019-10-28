@@ -12,9 +12,23 @@ class MyListV1<A> {
 
     fun isEmpty(): Boolean = head == null
 
+    fun size() : Int {
+        if (isEmpty()) {
+            return 0
+        }
+
+        var current = head
+        var counter = 0
+        while (current != null) {
+            counter += 1
+            current = current.next
+        }
+        return counter
+    }
+
     fun add(value: A) {
-        if (head == null) {
-            head = Node<A>(value)
+        if (isEmpty()) {
+            head = Node(value)
             return
         }
 
@@ -48,10 +62,13 @@ fun main() {
 
     println(myList)
     println("Is list empty? ${myList.isEmpty()}")
+    println("size : ${myList.size()}")
 
     myList.add(1)
     println(myList)
+    println("size : ${myList.size()}")
 
     myList.add(2)
     println(myList)
+    println("size : ${myList.size()}")
 }
