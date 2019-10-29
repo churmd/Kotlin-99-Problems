@@ -4,12 +4,10 @@ package lists
  * Returns the last item of a list
  */
 fun <A> MyListV2<A>.last(): A {
-    return when (this) {
-        Nil -> throw NoSuchElementException()
-        is Cons ->
-            when (this.next) {
-                Nil -> this.value
-                is Cons -> this.next.last()
-            }
+    val length = this.len()
+    if (length == 0) {
+        throw NoSuchElementException()
+    } else {
+        return this.get(length - 1)
     }
 }
