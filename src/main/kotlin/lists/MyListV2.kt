@@ -24,14 +24,22 @@ sealed class MyListV2<out A> {
     }
 
     fun get(index: Int): A {
-        return getHelper(index, this)
+        return when (this) {
+            Nil -> throw IndexOutOfBoundsException()
+            is Cons -> getHelper(index, this)
+        }
     }
 
-    private tailrec fun getHelper(index: Int, listV2: MyListV2<A>): A {
-        return when (listV2) {
+    private tailrec fun getHelper(index: Int, listV2: Cons<A>): A {
+        if (index == 0) {
+            return listV2.value
+        }
+
+        return when (listV2.next) {
             is Nil -> throw IndexOutOfBoundsException()
             is Cons -> getHelper(index - 1, listV2.next)
         }
+
     }
 
     fun len(): Int {
@@ -63,8 +71,10 @@ fun main() {
     println(l1.len())
     println(l2)
     println(l2.len())
+    println(l2.get(1))
 
     val l3 = makeMyListV2(listOf(1, 2, 3, 4))
     println(l3)
+    println(l3.len())
 }
 
