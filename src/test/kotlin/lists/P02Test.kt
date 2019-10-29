@@ -9,13 +9,25 @@ class P02Test {
 
     @Test
     fun `penultimate element from list`() {
-        assertEquals(2, penultimate(listOf(1, 2, 3)), "Did not get second to last element")
+        val l1 = makeMyListV2(listOf(1, 2, 3))
+        assertEquals(2, l1.penultimate(), "Did not get second to last element")
     }
 
     @Test
     fun `penultimate element from single element list`() {
-        assertFailsWith<IndexOutOfBoundsException> {
-            assertEquals(1, penultimate(listOf(1)))
+        val l1 = makeMyListV2(listOf(1))
+        assertFailsWith<NoSuchElementException> {
+            assertEquals(1, l1.penultimate())
+        }
     }
-}
+
+    @Test
+    fun `penultimate element from empty list`() {
+        val l1 = ArrayList<Int>()
+        val l2 = makeMyListV2(l1)
+        assertFailsWith<NoSuchElementException> {
+            assertEquals(1, l2.penultimate())
+        }
+    }
+
 }
