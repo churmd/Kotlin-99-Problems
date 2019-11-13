@@ -43,4 +43,32 @@ class MyListV2Test {
         val tenElemList = makeMyListV2(listOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9))
         assertEquals(10, tenElemList.len(), "Ten element list is not length ten")
     }
+
+    @Test
+    fun `empty lists are equal`() {
+        assertTrue(Nil.myEquals(Nil), "Empty lists are not equal to each other")
+    }
+
+    @Test
+    fun `non empty list does not equal empty list`() {
+        val l = Cons(1, Nil)
+        assertFalse(l.myEquals(Nil), "Non empty list myEquals empty list")
+        assertFalse(Nil.myEquals(l), "Empty list myEquals non empty list")
+    }
+
+    @Test
+    fun `matching lists are equal`() {
+        val l1 = makeMyListV2(listOf(1,2,3,4,5))
+        val l2 = makeMyListV2(listOf(1,2,3,4,5))
+        assertTrue(l1.myEquals(l2), "Lists are not equal")
+        assertTrue(l2.myEquals(l1), "Lists are not equal")
+    }
+
+    @Test
+    fun `non matching lists are not equal`() {
+        val l1 = makeMyListV2(listOf(1,2,3,4,5))
+        val l2 = makeMyListV2(listOf(1,2,3,4,6))
+        assertFalse(l1.myEquals(l2), "Lists are equal")
+        assertFalse(l2.myEquals(l1), "Lists are equal")
+    }
 }

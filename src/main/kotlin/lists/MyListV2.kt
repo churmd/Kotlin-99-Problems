@@ -3,7 +3,7 @@ package lists
 import java.lang.IndexOutOfBoundsException
 
 object Nil : MyListV2<Nothing>()
-class Cons<A>(val value: A, val next: MyListV2<A>) : MyListV2<A>()
+class Cons<A>(val headValue: A, val next: MyListV2<A>) : MyListV2<A>()
 
 sealed class MyListV2<out A> {
 
@@ -18,8 +18,8 @@ sealed class MyListV2<out A> {
 
     private tailrec fun toStringHelper(acc: String, list: Cons<A>): String {
         return when (list.next) {
-            is Nil -> acc + "${list.value}]"
-            is Cons -> toStringHelper(acc + "${list.value}, ", list.next)
+            is Nil -> acc + "${list.headValue}]"
+            is Cons -> toStringHelper(acc + "${list.headValue}, ", list.next)
         }
     }
 
@@ -32,7 +32,7 @@ sealed class MyListV2<out A> {
 
     private tailrec fun getHelper(index: Int, listV2: Cons<A>): A {
         if (index == 0) {
-            return listV2.value
+            return listV2.headValue
         }
 
         return when (listV2.next) {
@@ -50,6 +50,18 @@ sealed class MyListV2<out A> {
         return when (listV2) {
             is Nil -> acc
             is Cons -> lenHelper((acc + 1), listV2.next)
+        }
+    }
+
+    fun <A> myEquals(otherList: MyListV2<A>): Boolean {
+        return when (otherList) {
+            Nil -> this is Nil
+            is Cons ->
+                if (this is Cons && this.headValue == otherList.headValue) {
+                    this.next.myEquals(otherList.next)
+                } else {
+                    false
+                }
         }
     }
 }
